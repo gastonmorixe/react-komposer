@@ -114,17 +114,18 @@ export default function compose(dataLoader, options = {}) {
           return loadingHandler();
         }
 
-        const finalProps = {
-          ...props,
-          ...data,
-        };
-
         const setChildRef = (c) => {
           this.child = c;
         };
+        
+        const finalProps = {
+          ...props,
+          ...data,
+          ...(!(Child instanceof Function) && { ref: setChildRef })
+        };
 
         return (
-          <Child ref={setChildRef} {...finalProps} />
+          <Child {...finalProps} />
         );
       }
     }
